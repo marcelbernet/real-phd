@@ -1,0 +1,221 @@
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #00e676; /* A nice "sciencey" green */
+    --secondary-color: #f44336; /* A contrasting color for secondary actions */
+    --text-color: #e0e0e0;
+    --text-secondary: #a0a0a0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
+}
+
+.hidden {
+    display: none !important;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-weight: 300;
+    font-size: 1.8em;
+    margin-top: 20px;
+}
+
+/* MODIFIED: New language selector in header */
+.lang-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-lang {
+    background: transparent;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-lang.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+main {
+    flex-grow: 1; /* Pushes the footer to the bottom */
+}
+
+/* MODIFIED: Unlock section layout */
+.unlock-section {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 15px; /* Space between input and button */
+    margin-bottom: 30px;
+}
+
+#code-input {
+    width: 100%; /* Take full width */
+    background: var(--surface-color);
+    border: 1px solid var(--text-secondary);
+    border-radius: 5px;
+    padding: 12px;
+    color: var(--text-color);
+    font-size: 1em;
+    text-align: center;
+}
+
+#code-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    width: 100%; /* Make button full-width */
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* NEW: Secondary button style for "Forget Codes" */
+footer {
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+.btn-secondary.active {
+    background-color: #4a1c19; /* dark red feedback on tap */
+}
+
+
+#slide-links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.slide-link {
+    display: block;
+    background: var(--surface-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.2em;
+    text-align: center;
+    border-left: 5px solid var(--primary-color);
+    transition: background-color 0.2s;
+}
+
+.slide-link:active {
+    background-color: #333;
+}
+
+/* Modal Styles - Unchanged */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--surface-color);
+    margin: 20px;
+    padding: 25px;
+    border-radius: 10px;
+    width: 95%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-button {
+    color: var(--text-secondary);
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loading-text {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 20px 0;
+}
+
+#modal-body h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+#modal-body p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+#modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+#modal-body strong {
+    color: var(--primary-color);
+}

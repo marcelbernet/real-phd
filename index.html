@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PhD Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Main Application Screen -->
+    <div id="app">
+        <header>
+            <div id="lang-selector-header" class="lang-buttons">
+                <!-- Buttons are now here, text content will be set by JS -->
+                <button class="btn-lang" data-lang="en">English</button>
+                <button class="btn-lang" data-lang="ca">Català</button>
+            </div>
+            <h1 id="app-title">The "Real" Thesis Defense</h1>
+        </header>
+
+        <main>
+            <div class="unlock-section">
+                <input type="text" id="code-input" placeholder="Enter secret code...">
+                <button id="unlock-button" class="btn">Unlock</button>
+            </div>
+            
+            <div id="slide-links-container">
+                <!-- Unlocked slide links will appear here -->
+            </div>
+        </main>
+
+        <footer>
+            <button id="forget-button" class="btn btn-secondary">Forget Codes</button>
+        </footer>
+    </div>
+
+    <!-- Modal for displaying slide content -->
+    <div id="slide-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
