@@ -5,17 +5,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===================================================================
 
     const CODES = {
-        // Code: { slides: [array of slide numbers], message: "Unlock message" }
-        'WELCOME': { slides: [1, 2, 3], message: 'Welcome to the real talk!' },
-        'GAIA':    { slides: [4, 5], message: 'Meet our spy in the sky, Gaia!' },
-        'GALAXY':  { slides: [7, 8, 9, 10], message: 'A tour of the Milky Way.' },
-        'HERCULES':{ slides: [14, 15, 16, 17, 18], message: 'Finding misbehaving stars!' }, 
-        'CRIME':   { slides: [22, 25, 29, 32], message: 'Solving the Hercules mystery.' },
-        'GHOST':   { slides: [33, 35, 46, 58], message: 'We found ghost spirals!' },
-        'SPLASH':  { slides: [60, 61, 62], message: 'Something hit us!' },
-        'SINDY':   { slides: [69, 70, 79, 80], message: 'Unlocking my secret weapon: AI!' },
-        'VERDICT': { slides: [83, 84, 85], message: 'The culprit has been identified!' },
-        'THEEND':  { slides: [86, 87, 91], message: 'That\'s all, folks! Thanks for coming!' },
+        // Codi inicial per donar la benvinguda i explicar com funciona la web.
+        'BENVINGUT': { slides: [1, 2], message: 'Comencem l\'aventura! Aquí tens les instruccions.' },
+        
+        // ===== INTRODUCCIÓ =====
+        'RIU':       { slides: [5], message: 'La metàfora del riu, desbloquejada!' },
+        'GAIA':      { slides: [6], message: 'El nostre Google Maps galàctic.' },
+        'MOLLA':     { slides: [7], message: 'El pa de cada dia dels astrònoms.' },
+        'PIZZA':     { slides: [8], message: 'Una de pizza còsmica, per favor!' },
+    
+        // ===== EINES DE DINÀMICA =====
+        'CULLERETA': { slides: [10], message: 'La cullereta que ho remena tot.' },
+        'CRISTO':    { slides: [12], message: 'Entendre els espirals és un bon embolic.' },
+        'TOBOGAN':   { slides: [14], message: 'Tothom al tobogan còsmic!' },
+    
+        // ===== PRIMER ARTICLE =====
+        'CONFUSIO':  { slides: [25], message: 'El misteri de la confusió A o B.' },
+    
+        // ===== SEGON ARTICLE =====
+        'FRE':       { slides: [48], message: 'Rescat! Explicació del fre galàctic.' },
+        'EUREKA':    { slides: [51], message: 'La història d\'una idea "bova" que va funcionar!' },
+        'FANTASMA':  { slides: [54], message: 'Les ombres fantasma de la matèria fosca.' },
+    
+        // ===== TERCER ARTICLE (PLANTEJAMENT) =====
+        'XOC':       { slides: [66], message: 'Onades galàctiques després del xoc.' },
+        'MEME':      { slides: [69], message: 'La broma interna, només per a experts.' },
+        'CAOS':      { slides: [71], message: 'Fins i tot el cas més simple és un caos.' },
+        'FRACAS':    { slides: [72], message: 'El nostre primer intent... no va anar gaire bé.' },
+    
+        // ===== TERCER ARTICLE (RESOLUCIÓ) =====
+        'YOUTUBE':   { slides: [77], message: 'Com un vídeo de YouTube a mitjanit em va donar la solució.' },
+        'MAQUINA':   { slides: [87], message: 'Les equacions que ha trobat la màquina.' },
+        'CERCLE':    { slides: [90], message: 'Tornem a les dades reals. El cercle es tanca.' },
+        'VEREDICTE': { slides: [92], message: 'El moment de la veritat: model vs. realitat.' },
+    
+        // ===== CONCLUSIONS =====
+        'FINAL':     { slides: [93, 95], message: 'Això és tot! Gràcies per jugar.' },
     };
 
     const CODE_ORDER = Object.keys(CODES);
@@ -30,18 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
             codeError: 'Oops! Wrong code. Try again.',
             forgetButton: 'Forget Codes',
             forgetConfirm: 'Are you sure you want to lock all slides again?',
-            loadingLinks: 'Checking for content...' // New string for UX
+            loadingLinks: 'Checking for content...'
         },
         ca: {
             appTitle: 'La Defensa "Real" de la Tesi',
             inputPlaceholder: 'Introdueix el codi secret...',
             unlockButton: 'Desbloca',
             slideLinkText: 'Explicació de la Diapo',
+            // He ajustat els missatges perquè el prefix "Èxit!" s'apliqui a la traducció catalana
             codeSuccess: (msg) => `Èxit! ${msg}`,
             codeError: 'Ups! Codi incorrecte. Prova de nou.',
             forgetButton: 'Oblida els Codis',
             forgetConfirm: 'Estàs segur que vols tornar a bloquejar totes les diapositives?',
-            loadingLinks: 'Verificant el contingut...' // New string for UX
+            loadingLinks: 'Verificant el contingut...'
         }
     };
     
@@ -49,9 +75,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // APPLICATION LOGIC - DO NOT EDIT BELOW THIS LINE
     // ===================================================================
 
+    // Funció d'ajuda per calcular la distància de Levenshtein (per a la tolerància a errors)
+    function levenshtein(s1, s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+        const costs = [];
+        for (let i = 0; i <= s1.length; i++) {
+            let lastValue = i;
+            for (let j = 0; j <= s2.length; j++) {
+                if (i === 0) {
+                    costs[j] = j;
+                } else {
+                    if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+            }
+            if (i > 0) costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
+
+    // CANVI PRINCIPAL: L'estat inicial estableix el català com a llengua per defecte.
+    // Aquest valor només se sobreescriurà si l'usuari ja tenia un altre idioma guardat d'una visita anterior.
     let state = {
         unlockedSlides: [],
-        language: 'en'
+        language: 'ca'
     };
 
     const dom = {
@@ -74,12 +128,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadState() {
         const savedState = localStorage.getItem('phdCompanionState');
         if (savedState) {
+            // Fusionem l'estat guardat amb el nostre estat per defecte.
+            // Si l'usuari tenia 'en' guardat, aquest sobreescriurà el 'ca' per defecte.
+            // Si és un visitant nou, l'estat per defecte ('ca') es mantindrà.
             state = { ...state, ...JSON.parse(savedState) };
         }
     }
     
     function updateUIStrings() {
         const strings = UI_STRINGS[state.language];
+        document.documentElement.lang = state.language; // Actualitza l'atribut lang de l'HTML
         dom.appTitle.textContent = strings.appTitle;
         dom.codeInput.placeholder = strings.inputPlaceholder;
         dom.unlockButton.textContent = strings.unlockButton;
@@ -89,9 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // MODIFIED: This function is now async and checks for file existence.
+    // Aquesta funció i la resta no necessiten canvis
     async function renderSlideLinks() {
-        // Provide immediate feedback to the user that something is happening.
         dom.slideLinksContainer.innerHTML = `<p class="loading-text">${UI_STRINGS[state.language].loadingLinks}</p>`;
         
         const sortedSlides = [...new Set(state.unlockedSlides)].sort((a, b) => a - b);
@@ -101,28 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Create an array of promises, one for each slide file check.
         const checkPromises = sortedSlides.map(slideNum => {
             const path = `content/${state.language}/slide${slideNum}.html`;
-            // Use a HEAD request for efficiency - we only need to know if it exists.
             return fetch(path, { method: 'HEAD' })
-                .then(response => ({
-                    slideNum: slideNum,
-                    exists: response.ok // .ok is true for status codes 200-299
-                }))
-                .catch(() => ({
-                    slideNum: slideNum,
-                    exists: false // If fetch fails (e.g., network error), treat as not existing.
-                }));
+                .then(response => ({ slideNum, exists: response.ok }))
+                .catch(() => ({ slideNum, exists: false }));
         });
 
-        // Wait for all the checks to complete.
         const results = await Promise.all(checkPromises);
-
-        // Clear the loading message.
         dom.slideLinksContainer.innerHTML = '';
 
-        // Filter for only the slides that have content and create the links.
         results.forEach(result => {
             if (result.exists) {
                 const link = document.createElement('a');
@@ -136,47 +181,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleUnlock() {
-        const code = dom.codeInput.value.trim().toUpperCase();
-        const codeIndex = CODE_ORDER.indexOf(code);
-
-        if (codeIndex > -1) {
-            const unlockedInfo = CODES[code];
+        const userInput = dom.codeInput.value.trim().toUpperCase();
+        if (!userInput) return; // No fer res si l'entrada està buida
+    
+        let foundCode = null;
+    
+        // 1. Comprovació de coincidència exacta (el cas més comú)
+        if (CODES[userInput]) {
+            foundCode = userInput;
+        } 
+        // 2. Si no hi ha coincidència exacta, buscar amb tolerància a 1 error
+        else {
+            for (const validCode of CODE_ORDER) {
+                if (levenshtein(userInput, validCode) === 1) {
+                    foundCode = validCode;
+                    break; // Hem trobat el primer codi plausible, sortim del bucle
+                }
+            }
+        }
+    
+        if (foundCode) {
+            const codeData = CODES[foundCode];
+            const codeIndex = CODE_ORDER.indexOf(foundCode);
+            
             let slidesToUnlock = [];
             for (let i = 0; i <= codeIndex; i++) {
                 const currentCodeKey = CODE_ORDER[i];
                 slidesToUnlock.push(...CODES[currentCodeKey].slides);
             }
             state.unlockedSlides = [...new Set(slidesToUnlock)];
-            alert(UI_STRINGS[state.language].codeSuccess(unlockedInfo.message));
+            
+            alert(UI_STRINGS[state.language].codeSuccess(codeData.message));
+    
             dom.codeInput.value = '';
             saveState();
-            renderSlideLinks(); // This is now an async function, but we can "fire and forget"
+            renderSlideLinks();
         } else {
             alert(UI_STRINGS[state.language].codeError);
         }
     }
+
 
     function handleForget() {
         if (confirm(UI_STRINGS[state.language].forgetConfirm)) {
             state.unlockedSlides = [];
             saveState();
             renderSlideLinks();
-            // No alert needed here as the visual change is confirmation enough
         }
     }
 
     async function showModalForSlide(slideId) {
         const path = `content/${state.language}/slide${slideId}.html`;
         try {
-            // We use GET here to fetch the actual content
             const response = await fetch(path);
             if (!response.ok) throw new Error('Content not found');
             const content = await response.text();
             dom.modalBody.innerHTML = content;
             dom.slideModal.classList.remove('hidden');
         } catch (error) {
-            // This catch block is now just a fallback for unexpected server errors,
-            // as we've already verified the file exists.
             console.error('Error fetching slide content:', error);
             dom.modalBody.innerHTML = `<p>Sorry, an unexpected error occurred while loading the content.</p>`;
             dom.slideModal.classList.remove('hidden');
@@ -216,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     dom.forgetButton.addEventListener('click', handleForget);
 
-    // Initialization
     function init() {
         loadState();
         updateUIStrings();

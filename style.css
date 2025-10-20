@@ -42,25 +42,30 @@ header {
 header h1 {
     font-weight: 300;
     font-size: 1.8em;
-    margin-top: 20px;
 }
 
-/* MODIFIED: New language selector in header */
+/* MODIFICAT: Estils per als botons d'idioma */
 .lang-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
+    margin-bottom: 25px; /* Més espai entre botons i títol */
 }
 
 .btn-lang {
-    background: transparent;
-    border: 1px solid var(--text-secondary);
-    color: var(--text-secondary);
-    padding: 8px 15px;
-    border-radius: 20px;
+    background-color: var(--surface-color); /* Fons per destacar-los */
+    border: 2px solid var(--surface-color); /* Vora subtil */
+    color: var(--text-color); /* Text més visible */
+    padding: 10px 20px; /* Més grans */
+    border-radius: 25px; /* Més arrodonits */
     cursor: pointer;
     font-weight: bold;
+    font-size: 1em; /* Mida de font més gran */
     transition: all 0.2s ease-in-out;
+}
+
+.btn-lang:hover {
+    border-color: var(--text-secondary); /* Feedback visual al passar per sobre */
 }
 
 .btn-lang.active {
@@ -69,20 +74,21 @@ header h1 {
     color: var(--bg-color);
 }
 
+/* ... La resta de l'arxiu CSS no canvia ... */
+
 main {
-    flex-grow: 1; /* Pushes the footer to the bottom */
+    flex-grow: 1; 
 }
 
-/* MODIFIED: Unlock section layout */
 .unlock-section {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    gap: 15px; /* Space between input and button */
+    flex-direction: column;
+    gap: 15px;
     margin-bottom: 30px;
 }
 
 #code-input {
-    width: 100%; /* Take full width */
+    width: 100%;
     background: var(--surface-color);
     border: 1px solid var(--text-secondary);
     border-radius: 5px;
@@ -107,14 +113,13 @@ main {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.1s ease;
-    width: 100%; /* Make button full-width */
+    width: 100%;
 }
 
 .btn:active {
     transform: scale(0.98);
 }
 
-/* NEW: Secondary button style for "Forget Codes" */
 footer {
     margin-top: 40px;
     padding-bottom: 20px;
@@ -125,7 +130,7 @@ footer {
     color: var(--secondary-color);
     border: 1px solid var(--secondary-color);
 }
-.btn-secondary.active {
+.btn-secondary:active {
     background-color: #4a1c19; /* dark red feedback on tap */
 }
 
@@ -153,7 +158,6 @@ footer {
     background-color: #333;
 }
 
-/* Modal Styles - Unchanged */
 .modal {
     position: fixed;
     z-index: 1000;
