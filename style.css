@@ -17,7 +17,7 @@ body {
     font-family: 'Lato', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-size: 16px;
+    font-size: 18px;
     -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
 }
 
@@ -189,6 +189,35 @@ footer {
     to { transform: translateY(0); opacity: 1; }
 }
 
+.modal-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+
+.nav-button {
+    background: none;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.nav-button.hidden {
+    visibility: hidden;
+}
+
 .close-button {
     color: var(--text-secondary);
     position: absolute;
@@ -222,4 +251,14 @@ footer {
 }
 #modal-body strong {
     color: var(--primary-color);
+}
+
+#modal-body a {
+    color: var(--primary-color);
+}
+
+.caption {
+    font-style: italic;
+    margin-top: 5px;
+    color: var(--text-secondary);
 }

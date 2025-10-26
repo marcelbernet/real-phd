@@ -1,16 +1,14 @@
-<h2>Diapositiva 14: El Potencial, o el Tobogan Còsmic</h2>
+<h2>Diapositiva 14: El Meu Mètode: L'Esquelet de l'Espai de Fases (Article 1)</h2>
 <p>
-Anem amb una mica de matemàtiques, però sense espantar-nos. El <strong>potencial gravitacional</strong> sona complicat, però la idea és simple: és el mapa que et diu cap on "cau" la gravetat a cada punt. A la Terra, sempre apunta cap avall. En una galàxia, és més complex.
+Fins ara, l'anàlisi d'aquests "bultos" es feia a ull, de manera subjectiva. Això era una limitació enorme. La motivació del meu primer article va ser: podem automatitzar-ho? Podem crear una eina que trobi aquestes estructures de manera objectiva i reproduïble?
 </p>
 <p>
-La meva analogia preferida és pensar-hi com si fos un <strong>tobogan gegant</strong>. Les estrelles són com bales que llisquen per aquest tobogan còsmic. La forma del tobogan les obliga a moure's d'una manera determinada.
+La solució va venir en dues parts:
 </p>
+<ul>
+    <li><strong>Wavelets:</strong> Una eina matemàtica que actua com un filtre per detectar pics i valls en les dades. La vaig fer servir per identificar de manera robusta la posició dels "ossos" principals del nostre mapa de velocitats.</li>
+    <li><strong>Teoria de Grafs (BFS):</strong> Un cop tens els ossos, has de muntar l'esquelet. Vaig utilitzar un algoritme de teoria de grafs per connectar els grups detectats a diferents distàncies del Sol, creant així el primer <strong>"esquelet de l'espai de fases"</strong> en 3D.</li>
+</ul>
 <p>
-El truc és que la forma del tobogan la defineix la distribució de massa (on són les estrelles, la barra, la matèria fosca...). Per tant, si coneixem la forma del tobogan, podem saber com està feta la galàxia.
-</p>
-<p>
-I aquí ve el problema: <strong>no podem "veure" el tobogan directament</strong>. Però el que sí que podem fer, gràcies a Gaia, és mesurar com s'estan movent les bales (les estrelles) en aquest precís instant.
-</p>
-<p>
-La nostra feina (la fletxa verda de la diapo) és fer el pas contrari: a partir d'observar com es mouen les estrelles, <strong>intentar reconstruir quina forma ha de tenir el tobogan</strong> perquè es moguin així. I si reconstruïm el tobogan, entenem l'estructura de la galàxia.
+El resultat és una representació quantitativa i objectiva de les principals estructures del disc galàctic, que ens va revelar que els grups són més complexos del que pensàvem: es fusionen i es divideixen, en lloc de ser estructures simples i aïllades.
 </p>

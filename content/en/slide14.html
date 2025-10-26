@@ -1,16 +1,14 @@
-<h2>Slide 14: The Potential, or the Cosmic Toboggan</h2>
+<h2>Slide 14: My Method: The Phase-Space Skeleton (Article 1)</h2>
 <p>
-Let's get into a bit of math, but don't panic. The <strong>gravitational potential</strong> sounds complicated, but the idea is simple: it's the map that tells you which way gravity "pulls" at every point. On Earth, it always points down. In a galaxy, it's more complex.
+Until now, the analysis of these "lumps" was done by eye, in a subjective manner. This was a huge limitation. The motivation for my first article was: can we automate this? Can we create a tool that finds these structures objectively and reproducibly?
 </p>
 <p>
-My favorite analogy is to think of it as a <strong>giant toboggan or slide</strong>. The stars are like marbles sliding down this cosmic toboggan. The shape of the slide forces them to move in a particular way.
+The solution came in two parts:
 </p>
+<ul>
+    <li><strong>Wavelets:</strong> A mathematical tool that acts like a filter to detect peaks and valleys in the data. I used it to robustly identify the position of the main "bones" of our velocity map.</li>
+    <li><strong>Graph Theory (BFS):</strong> Once you have the bones, you have to assemble the skeleton. I used a graph theory algorithm to connect the detected groups at different distances from the Sun, thus creating the first 3D <strong>"phase-space skeleton."</strong></li>
+</ul>
 <p>
-The trick is that the shape of the toboggan is defined by the distribution of mass (where the stars, the bar, the dark matter are...). Therefore, if we know the shape of the toboggan, we can know what the galaxy is made of.
-</p>
-<p>
-And here comes the problem: <strong>we can't "see" the toboggan directly</strong>. But what we *can* do, thanks to Gaia, is measure how the marbles (the stars) are moving at this very moment.
-</p>
-<p>
-Our job (the green arrow on the slide) is to do the reverse: by observing how the stars are moving, we try to <strong>reconstruct what the shape of the toboggan must be</strong> to make them move that way. And if we reconstruct the toboggan, we understand the structure of the galaxy.
+The result is a quantitative and objective representation of the main structures of the galactic disk, which revealed that the groups are more complex than we thought: they merge and split, rather than being simple, isolated structures.
 </p>

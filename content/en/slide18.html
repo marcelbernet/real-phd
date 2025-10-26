@@ -1,0 +1,10 @@
+<h2>Slide 18: The Key Innovation: Painting the Skeleton with Gradients (Article 2)</h2>
+<p>
+With the skeleton in hand, the next step was to use it to finally break the "confusion" between the fast and slow bar models. But we needed a new way to compare the data with the models, one that was more sensitive than just looking at the position of the "lumps."
+</p>
+<p>
+My key idea was: what if, in addition to the skeleton's position, we also measure its <strong>large-scale orientation</strong>? Instead of treating each point on the skeleton in isolation, we "paint" it with a color that represents the direction in which the ridge extends on a large scale. Technically, this is done by calculating the <strong>gradient</strong>.
+</p>
+<p>
+The beauty of this is that the gradient encodes information about the <strong>global shape</strong> of the structure, but it does so <strong>locally</strong>, point by point. A good theoretical model must not only predict where the "lumps" are (the position), but also how they are oriented (the color).
+</p>

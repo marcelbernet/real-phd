@@ -6,41 +6,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const CODES = {
         // Codi inicial per donar la benvinguda i explicar com funciona la web.
-        'BENVINGUT': { slides: [1, 2], message: 'Comencem l\'aventura! Aquí tens les instruccions.' },
-        
-        // ===== INTRODUCCIÓ =====
-        'RIU':       { slides: [5], message: 'La metàfora del riu, desbloquejada!' },
-        'GAIA':      { slides: [6], message: 'El nostre Google Maps galàctic.' },
-        'MOLLA':     { slides: [7], message: 'El pa de cada dia dels astrònoms.' },
-        'PIZZA':     { slides: [8], message: 'Una de pizza còsmica, per favor!' },
+        'BENVINGUT': { slides: [0], message: 'Comencem l\'aventura! Aquí tens les instruccions.' },
+        'RIU':       { slides: [1], message: 'La metàfora del riu, desbloquejada!' },
+        'GAIA':      { slides: [2], message: 'El nostre Google Maps galàctic.' },
+        'GALAXIA':     { slides: [3], message: 'Com es la nostra galaxia?' },
     
         // ===== EINES DE DINÀMICA =====
-        'CULLERETA': { slides: [10], message: 'La cullereta que ho remena tot.' },
-        'CRISTO':    { slides: [12], message: 'Entendre els espirals és un bon embolic.' },
-        'TOBOGAN':   { slides: [14], message: 'Tothom al tobogan còsmic!' },
+        'BARRA': { slides: [4], message: 'La cullereta que ho remena tot.' },
+        'ESPIRAL':    { slides: [6], message: 'Entendre els espirals és un bon embolic.' },
+        'TOBOGAN':   { slides: [8], message: 'Tothom al tobogan còsmic!' },
     
         // ===== PRIMER ARTICLE =====
-        'CONFUSIO':  { slides: [25], message: 'El misteri de la confusió A o B.' },
+        'BULTOS':  { slides: [12], message: 'El misteri de la confusió A o B.' },
+        'ESQUELET': { slides: [14], message: 'Com vam construir un esquelet de la galàxia.' },
+        'GRADIENT': { slides: [18], message: 'Pintant l\'esquelet per revelar la veritat.' },
+        'FALLA': { slides: [20], message: 'El veredicte: els models clàssics fallen.' },
     
         // ===== SEGON ARTICLE =====
-        'FRE':       { slides: [48], message: 'Rescat! Explicació del fre galàctic.' },
-        'EUREKA':    { slides: [51], message: 'La història d\'una idea "bova" que va funcionar!' },
-        'FANTASMA':  { slides: [54], message: 'Les ombres fantasma de la matèria fosca.' },
+        'OMBRA':    { slides: [24], message: 'La història d\'una idea loca que va funcionar!' },
+        'FANTASMA':  { slides: [26], message: 'Les ombres fantasma de la matèria fosca.' },
     
         // ===== TERCER ARTICLE (PLANTEJAMENT) =====
-        'XOC':       { slides: [66], message: 'Onades galàctiques després del xoc.' },
-        'MEME':      { slides: [69], message: 'La broma interna, només per a experts.' },
-        'CAOS':      { slides: [71], message: 'Fins i tot el cas més simple és un caos.' },
-        'FRACAS':    { slides: [72], message: 'El nostre primer intent... no va anar gaire bé.' },
+        'XOC':       { slides: [31], message: 'Onades galàctiques després del xoc.' },
+        'CAOS':      { slides: [33], message: 'Fins i tot el cas més simple és un caos.' },
+        'SINDY':    { slides: [34], message: 'El nostre primer intent... no va anar gaire bé.' },
     
         // ===== TERCER ARTICLE (RESOLUCIÓ) =====
-        'YOUTUBE':   { slides: [77], message: 'Com un vídeo de YouTube a mitjanit em va donar la solució.' },
-        'MAQUINA':   { slides: [87], message: 'Les equacions que ha trobat la màquina.' },
-        'CERCLE':    { slides: [90], message: 'Tornem a les dades reals. El cercle es tanca.' },
-        'VEREDICTE': { slides: [92], message: 'El moment de la veritat: model vs. realitat.' },
-    
+        'FORMULA':   { slides: [35], message: 'Les equacions que ha trobat la màquina.' },
+        'DADES':    { slides: [38], message: 'Tornem a les dades reals. El cercle es tanca.' },
+
         // ===== CONCLUSIONS =====
-        'FINAL':     { slides: [93, 95], message: 'Això és tot! Gràcies per jugar.' },
+        'FINAL':     { slides: [41], message: 'Això és tot! Gràcies per jugar.' },
+        'PREGUNTES':  { slides: [43], message: 'Gràcies! Aquí teniu una mica d\'entreteniment.' },
     };
 
     const CODE_ORDER = Object.keys(CODES);
@@ -55,7 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             codeError: 'Oops! Wrong code. Try again.',
             forgetButton: 'Forget Codes',
             forgetConfirm: 'Are you sure you want to lock all slides again?',
-            loadingLinks: 'Checking for content...'
+            loadingLinks: 'Checking for content...',
+            prevButton: '← Previous',
+            nextButton: 'Next →'
         },
         ca: {
             appTitle: 'La Defensa "Real" de la Tesi',
@@ -67,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             codeError: 'Ups! Codi incorrecte. Prova de nou.',
             forgetButton: 'Oblida els Codis',
             forgetConfirm: 'Estàs segur que vols tornar a bloquejar totes les diapositives?',
-            loadingLinks: 'Verificant el contingut...'
+            loadingLinks: 'Verificant el contingut...',
+            prevButton: '← Anterior',
+            nextButton: 'Següent →'
         }
     };
     
@@ -105,7 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Aquest valor només se sobreescriurà si l'usuari ja tenia un altre idioma guardat d'una visita anterior.
     let state = {
         unlockedSlides: [],
-        language: 'ca'
+        language: 'ca',
+        currentSlideIndex: -1
     };
 
     const dom = {
@@ -118,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         slideModal: document.getElementById('slide-modal'),
         modalBody: document.getElementById('modal-body'),
         closeButton: document.querySelector('.close-button'),
-        forgetButton: document.getElementById('forget-button')
+        forgetButton: document.getElementById('forget-button'),
+        prevSlideButton: document.getElementById('prev-slide-button'),
+        nextSlideButton: document.getElementById('next-slide-button')
     };
 
     function saveState() {
@@ -142,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.codeInput.placeholder = strings.inputPlaceholder;
         dom.unlockButton.textContent = strings.unlockButton;
         dom.forgetButton.textContent = strings.forgetButton;
+        dom.prevSlideButton.textContent = strings.prevButton;
+        dom.nextSlideButton.textContent = strings.nextButton;
         dom.langButtons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === state.language);
         });
@@ -231,13 +237,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function showModalForSlide(slideId) {
+        const sortedSlides = [...new Set(state.unlockedSlides)].sort((a, b) => a - b);
+        state.currentSlideIndex = sortedSlides.indexOf(parseInt(slideId, 10));
+
         const path = `content/${state.language}/slide${slideId}.html`;
         try {
             const response = await fetch(path);
             if (!response.ok) throw new Error('Content not found');
             const content = await response.text();
             dom.modalBody.innerHTML = content;
+
+            // Update nav buttons
+            const hasPrev = state.currentSlideIndex > 0;
+            const hasNext = state.currentSlideIndex < sortedSlides.length - 1;
+            dom.prevSlideButton.classList.toggle('hidden', !hasPrev);
+            dom.nextSlideButton.classList.toggle('hidden', !hasNext);
+
             dom.slideModal.classList.remove('hidden');
+            dom.modalBody.scrollTop = 0; // Scroll to top on new slide
         } catch (error) {
             console.error('Error fetching slide content:', error);
             dom.modalBody.innerHTML = `<p>Sorry, an unexpected error occurred while loading the content.</p>`;
@@ -277,6 +294,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     dom.forgetButton.addEventListener('click', handleForget);
+
+    dom.prevSlideButton.addEventListener('click', () => {
+        const sortedSlides = [...new Set(state.unlockedSlides)].sort((a, b) => a - b);
+        if (state.currentSlideIndex > 0) {
+            const prevSlideId = sortedSlides[state.currentSlideIndex - 1];
+            showModalForSlide(prevSlideId);
+        }
+    });
+
+    dom.nextSlideButton.addEventListener('click', () => {
+        const sortedSlides = [...new Set(state.unlockedSlides)].sort((a, b) => a - b);
+        if (state.currentSlideIndex < sortedSlides.length - 1) {
+            const nextSlideId = sortedSlides[state.currentSlideIndex + 1];
+            showModalForSlide(nextSlideId);
+        }
+    });
 
     function init() {
         loadState();
