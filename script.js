@@ -230,9 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleForget() {
         if (confirm(UI_STRINGS[state.language].forgetConfirm)) {
-            state.unlockedSlides = [];
-            saveState();
-            renderSlideLinks();
+            localStorage.removeItem('phdCompanionState');
+            location.reload();
         }
     }
 
