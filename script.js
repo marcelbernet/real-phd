@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'FALLA': { slides: [20], message: 'El veredicte: els models clàssics fallen.' },
     
         // ===== SEGON ARTICLE =====
-        'OMBRA':    { slides: [24], message: 'La història d\'una idea loca que va funcionar!' },
+        'OMBRA':    { slides: [22], message: 'La història d\'una idea loca que va funcionar!' },
         'FANTASMA':  { slides: [26], message: 'Les ombres fantasma de la matèria fosca.' },
     
         // ===== TERCER ARTICLE (PLANTEJAMENT) =====
