@@ -54,21 +54,22 @@ document.addEventListener('DOMContentLoaded', () => {
             forgetConfirm: 'Are you sure you want to lock all slides again?',
             loadingLinks: 'Checking for content...',
             prevButton: '← Previous',
-            nextButton: 'Next →'
+            nextButton: 'Next →',
+            videoLinkButton: 'Watch the defense video'
         },
         ca: {
             appTitle: 'La Defensa "Real" de la Tesi',
             inputPlaceholder: 'Introdueix el codi secret...',
             unlockButton: 'Desbloca',
             slideLinkText: 'Explicació de la Diapo',
-            // He ajustat els missatges perquè el prefix "Èxit!" s'apliqui a la traducció catalana
             codeSuccess: (msg) => `Èxit! ${msg}`,
             codeError: 'Ups! Codi incorrecte. Prova de nou.',
             forgetButton: 'Oblida els Codis',
             forgetConfirm: 'Estàs segur que vols tornar a bloquejar totes les diapositives?',
             loadingLinks: 'Verificant el contingut...',
             prevButton: '← Anterior',
-            nextButton: 'Següent →'
+            nextButton: 'Següent →',
+            videoLinkButton: 'Vídeo de la defensa'
         }
     };
     
@@ -122,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
         closeButton: document.querySelector('.close-button'),
         forgetButton: document.getElementById('forget-button'),
         prevSlideButton: document.getElementById('prev-slide-button'),
-        nextSlideButton: document.getElementById('next-slide-button')
+        nextSlideButton: document.getElementById('next-slide-button'),
+        videoLink: document.getElementById('video-link')
     };
 
     function saveState() {
@@ -148,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.forgetButton.textContent = strings.forgetButton;
         dom.prevSlideButton.textContent = strings.prevButton;
         dom.nextSlideButton.textContent = strings.nextButton;
+        dom.videoLink.textContent = strings.videoLinkButton;
         dom.langButtons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === state.language);
         });
